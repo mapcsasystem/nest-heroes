@@ -2,8 +2,19 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class HeroesService {
-  findAll() {
-    return this._heroes;
+  findAll(limit: number, query: string) {
+    if (!limit && !query) {
+      return this._heroes;
+    }
+
+    const matchingHeroes = this._heroes.filter((hero) =>
+      JSON.stringify(hero).toLowerCase().includes(query.trim()),
+    );
+    query = query.trim();
+    if (query.length === 0) {
+      return [];
+    }
+    return matchingHeroes.slice(0, limit);
   }
 
   findOne(id: string) {
