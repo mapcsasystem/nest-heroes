@@ -1,9 +1,17 @@
 import { Module } from '@nestjs/common';
 import { HeroesModule } from './heroes/heroes.module';
-import { UsersModule } from './users/users.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [HeroesModule, UsersModule],
+  imports: [
+    ConfigModule.forRoot(),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+    HeroesModule,
+  ],
   controllers: [],
   providers: [],
 })

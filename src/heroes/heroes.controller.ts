@@ -1,23 +1,46 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { HeroesService } from './heroes.service';
+import { IHeroe } from './interfaces/hero.interface';
+import { CreateCarDto } from './dtos/create-car.dto';
 
 @Controller('heroes')
 export class HeroesController {
   constructor(private readonly _heroesService: HeroesService) {}
   @Get()
-  getAllHeroes(@Query('q') query: string, @Query('_limit') limit: number) {
-    console.log({ limit, query });
-
+  getAllHeroes(
+    @Query('q') query: string,
+    @Query('_limit') limit: string,
+  ): IHeroe[] {
     return this._heroesService.findAll(limit, query);
   }
-  //   @Get()
-  //   getHeroes(@Query('q') query: string, @Query('_limit') limit: number) {
-  //     // Aquí puedes realizar la lógica para procesar la consulta y limitar los resultados
-  //     return `Query: ${query}, Limit: ${limit}`;
-  //   }
 
   @Get(':id')
-  getHeroById(@Param('id') id: string) {
+  getHeroById(@Param('id', ParseUUIDPipe) id: string): IHeroe {
+    return this._heroesService.findOne(id);
+  }
+
+  @Post()
+  createHero(@Body() createCarDto: CreateCarDto) {
+    return this._heroesService.create(createCarDto);
+  }
+
+  @Patch(':id')
+  updateHero(@Param('id', ParseUUIDPipe) id: string) {
+    return this._heroesService.findOne(id);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseUUIDPipe) id: string) {
     return this._heroesService.findOne(id);
   }
 }
