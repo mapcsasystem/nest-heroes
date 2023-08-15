@@ -1,9 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class HeroesService {
   findAll() {
     return this._heroes;
+  }
+
+  findOne(id: string) {
+    const hero = this._heroes.find((hero) => hero.id === id);
+    if (!hero) {
+      throw new NotFoundException(`Hero by id '${id}' no exist`);
+    }
+    return hero;
   }
 
   private readonly _heroes = [
