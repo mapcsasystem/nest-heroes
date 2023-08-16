@@ -3,6 +3,7 @@ import { HeroesModule } from './heroes/heroes.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
+import { PublishersModule } from './publishers/publishers.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { ConfigModule } from '@nestjs/config';
       rootPath: join(__dirname, '..', 'public'),
     }),
     HeroesModule,
+    PublishersModule,
   ],
   controllers: [],
   providers: [],
