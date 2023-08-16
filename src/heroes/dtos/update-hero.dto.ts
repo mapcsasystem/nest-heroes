@@ -1,5 +1,4 @@
-import { IsString, IsNotEmpty, IsUUID, IsOptional } from 'class-validator';
-import { IPublisherEnum } from '../interfaces/hero.interface';
+import { IsString, IsUUID, IsOptional } from 'class-validator';
 
 export class UpdateHeroDto {
   @IsString()
@@ -13,7 +12,7 @@ export class UpdateHeroDto {
 
   @IsString()
   @IsOptional()
-  readonly publisher: IPublisherEnum;
+  readonly publisher: string;
 
   @IsString()
   @IsOptional()

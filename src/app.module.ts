@@ -4,6 +4,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ConfigModule } from '@nestjs/config';
 import { PublishersModule } from './publishers/publishers.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { PublishersModule } from './publishers/publishers.module';
     }),
     HeroesModule,
     PublishersModule,
+    SeedModule,
   ],
   controllers: [],
   providers: [],

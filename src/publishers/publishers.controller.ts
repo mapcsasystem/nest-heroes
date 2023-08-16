@@ -8,8 +8,7 @@ import {
   Delete,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { CreatePublisherDto } from './dto/create-publisher.dto';
-import { UpdatePublisherDto } from './dto/update-publisher.dto';
+import { CreatePublisherDto, UpdatePublisherDto } from './dto/';
 import { PublishersService } from './publishers.service';
 
 @Controller('publishers')

@@ -3,8 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreatePublisherDto } from './dto/create-publisher.dto';
-import { UpdatePublisherDto } from './dto/update-publisher.dto';
+import { CreatePublisherDto, UpdatePublisherDto } from './dto/';
 import { Publisher } from './entities/publisher.entity';
 import { v4 as uuid } from 'uuid';
 @Injectable()
@@ -55,30 +54,17 @@ export class PublishersService {
     this._publisher = this._publisher.filter((hero) => hero.id !== id);
   }
 
-  private _publisher: Publisher[] = [
-    // {
-    //   id: uuid(),
-    //   name: 'DC Comics',
-    //   createdAt: new Date(),
-    //   updatedAt: new Date(),
-    // },
-    // {
-    //   id: uuid(),
-    //   name: 'Marvel Comics',
-    //   createdAt: new Date(),
-    //   updatedAt: new Date(),
-    // },
-  ];
+  private _publisher: Publisher[] = [];
 
   private _findByName(
     publisherDB: Publisher,
     updatePublisherDto: UpdatePublisherDto,
   ) {
     const publisher = this._publisher.find(
-      (publisher) => publisher.name === updatePublisherDto.name,
+      (publisher) => publisherDB.name === updatePublisherDto.name,
     );
     if (publisher) {
-      throw new NotFoundException(
+      throw new BadRequestException(
         `The publisher name '${publisher.name}' exist`,
       );
     }

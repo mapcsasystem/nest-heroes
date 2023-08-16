@@ -10,8 +10,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { HeroesService } from './heroes.service';
-import { IHeroe } from './interfaces/hero.interface';
 import { CreateHeroDto, UpdateHeroDto } from './dtos';
+import { Heroe } from './entities/hero.entities';
 
 @Controller('heroes')
 export class HeroesController {
@@ -20,12 +20,12 @@ export class HeroesController {
   getAllHeroes(
     @Query('q') query: string,
     @Query('_limit') limit: string,
-  ): IHeroe[] {
+  ): Heroe[] {
     return this._heroesService.findAll(limit, query);
   }
 
   @Get(':id')
-  getHeroById(@Param('id', ParseUUIDPipe) id: string): IHeroe {
+  getHeroById(@Param('id', ParseUUIDPipe) id: string): Heroe {
     return this._heroesService.findOneById(id);
   }
 

@@ -1,5 +1,4 @@
 import { IsString, IsNotEmpty } from 'class-validator';
-import { IPublisherEnum } from '../interfaces/hero.interface';
 
 export class CreateHeroDto {
   @IsString()
@@ -7,7 +6,7 @@ export class CreateHeroDto {
   readonly superhero: string;
   @IsString()
   @IsNotEmpty()
-  readonly publisher: IPublisherEnum;
+  readonly publisher: string;
   @IsString()
   @IsNotEmpty()
   readonly alter_ego: string;
