@@ -8,8 +8,9 @@ import { Publisher } from './entities/publisher.entity';
 import { v4 as uuid } from 'uuid';
 @Injectable()
 export class PublishersService {
+  private _publishers: Publisher[] = [];
   findAll() {
-    return this._publisher;
+    return this._publishers;
   }
 
   create(createPublisherDto: CreatePublisherDto) {
@@ -20,12 +21,12 @@ export class PublishersService {
       createdAt: date,
       updatedAt: date,
     };
-    this._publisher.push(publisher);
+    this._publishers.push(publisher);
     return publisher;
   }
 
   findOneById(id: string) {
-    const publisher = this._publisher.find((publisher) => publisher.id === id);
+    const publisher = this._publishers.find((publisher) => publisher.id === id);
     if (!publisher) {
       throw new NotFoundException(`The publisher id '${id}' no exist`);
     }
@@ -35,7 +36,7 @@ export class PublishersService {
   update(id: string, updatePublisherDto: UpdatePublisherDto) {
     let publisherDB = this.findOneById(id);
     publisherDB = this._findByName(publisherDB, updatePublisherDto);
-    this._publisher = this._publisher.map((publisher) => {
+    this._publishers = this._publishers.map((publisher) => {
       if (publisher.id === id) {
         (publisher.updatedAt = new Date()),
           (publisherDB = {
@@ -51,16 +52,14 @@ export class PublishersService {
 
   remove(id: string) {
     this.findOneById(id);
-    this._publisher = this._publisher.filter((hero) => hero.id !== id);
+    this._publishers = this._publishers.filter((hero) => hero.id !== id);
   }
-
-  private _publisher: Publisher[] = [];
 
   private _findByName(
     publisherDB: Publisher,
     updatePublisherDto: UpdatePublisherDto,
   ) {
-    const publisher = this._publisher.find(
+    const publisher = this._publishers.find(
       (publisher) => publisherDB.name === updatePublisherDto.name,
     );
     if (publisher) {
@@ -69,5 +68,9 @@ export class PublishersService {
       );
     }
     return publisher;
+  }
+
+  fillPublishersWithSeedData(publishers: Publisher[]) {
+    this._publishers = publishers;
   }
 }

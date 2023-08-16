@@ -5,6 +5,7 @@ import { Heroe } from './entities/hero.entities';
 
 @Injectable()
 export class HeroesService {
+  private _heroes: Heroe[] = [];
   findAll(limit: string, query: string): Heroe[] {
     if (!limit && !query) {
       return this._heroes;
@@ -56,5 +57,7 @@ export class HeroesService {
     this._heroes = this._heroes.filter((hero) => hero.id !== id);
   }
 
-  private _heroes: Heroe[] = [];
+  fillCardsWithSeedData(heroes: Heroe[]) {
+    this._heroes = heroes;
+  }
 }
