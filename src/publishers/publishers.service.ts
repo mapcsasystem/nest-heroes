@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePublisherDto, UpdatePublisherDto } from './dto/';
 import { Publisher } from './entities/publisher.entity';
 import { v4 as uuid } from 'uuid';
