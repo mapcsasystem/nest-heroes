@@ -44,6 +44,6 @@ export class HeroesController {
 
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string) {
-    return this._heroesService.findOneById(id);
+    return this._heroesService.delete(id);
   }
 }

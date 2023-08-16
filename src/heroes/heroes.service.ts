@@ -52,8 +52,8 @@ export class HeroesService {
   }
 
   delete(id: string) {
-    const hero = this.findOneById(id);
-    return;
+    this.findOneById(id);
+    this._heroes = this._heroes.filter((hero) => hero.id != id);
   }
 
   private _heroes: IHeroe[] = [
