@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 @Injectable()
 export class PublishersService {
   private _publishers: Publisher[] = [];
+
   findAll() {
     return this._publishers;
   }
@@ -35,17 +36,17 @@ export class PublishersService {
 
   update(id: string, updatePublisherDto: UpdatePublisherDto) {
     let publisherDB = this.findOneById(id);
-    publisherDB = this._findByName(publisherDB, updatePublisherDto);
+
     this._publishers = this._publishers.map((publisher) => {
       if (publisher.id === id) {
-        (publisher.updatedAt = new Date()),
-          (publisherDB = {
-            ...publisherDB,
-            ...updatePublisherDto,
-            id,
-          });
-        return publisher;
+        publisherDB.updatedAt = new Date();
+        publisherDB = {
+          ...publisherDB,
+          ...updatePublisherDto,
+        };
+        return publisherDB;
       }
+      return publisher;
     });
     return publisherDB;
   }
@@ -53,21 +54,6 @@ export class PublishersService {
   remove(id: string) {
     this.findOneById(id);
     this._publishers = this._publishers.filter((hero) => hero.id !== id);
-  }
-
-  private _findByName(
-    publisherDB: Publisher,
-    updatePublisherDto: UpdatePublisherDto,
-  ) {
-    const publisher = this._publishers.find(
-      (publisher) => publisherDB.name === updatePublisherDto.name,
-    );
-    if (publisher) {
-      throw new BadRequestException(
-        `The publisher name '${publisher.name}' exist`,
-      );
-    }
-    return publisher;
   }
 
   fillPublishersWithSeedData(publishers: Publisher[]) {

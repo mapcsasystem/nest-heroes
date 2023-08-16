@@ -57,7 +57,7 @@ export class HeroesService {
     this._heroes = this._heroes.filter((hero) => hero.id !== id);
   }
 
-  fillCardsWithSeedData(heroes: Heroe[]) {
+  fillHeroesWithSeedData(heroes: Heroe[]) {
     this._heroes = heroes;
   }
 }
