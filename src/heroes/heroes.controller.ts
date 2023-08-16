@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { HeroesService } from './heroes.service';
 import { IHeroe } from './interfaces/hero.interface';
-import { CreateHeroDto } from './dtos/create-hero.dto';
+import { CreateHeroDto, UpdateHeroDto } from './dtos';
 
 @Controller('heroes')
 export class HeroesController {
@@ -26,7 +26,7 @@ export class HeroesController {
 
   @Get(':id')
   getHeroById(@Param('id', ParseUUIDPipe) id: string): IHeroe {
-    return this._heroesService.findOne(id);
+    return this._heroesService.findOneById(id);
   }
 
   @Post()
@@ -35,12 +35,15 @@ export class HeroesController {
   }
 
   @Patch(':id')
-  updateHero(@Param('id', ParseUUIDPipe) id: string) {
-    return this._heroesService.findOne(id);
+  updateHero(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateCarDto: UpdateHeroDto,
+  ) {
+    return this._heroesService.update(id, updateCarDto);
   }
 
   @Delete(':id')
   delete(@Param('id', ParseUUIDPipe) id: string) {
-    return this._heroesService.findOne(id);
+    return this._heroesService.findOneById(id);
   }
 }

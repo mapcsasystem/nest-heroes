@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { IHeroe, IPublisherEnum } from './interfaces/hero.interface';
 import { v4 as uuid } from 'uuid';
-import { CreateHeroDto } from './dtos/create-hero.dto';
+import { CreateHeroDto, UpdateHeroDto } from './dtos';
 
 @Injectable()
 export class HeroesService {
@@ -22,7 +22,7 @@ export class HeroesService {
     return matchingHeroes.slice(0, +limit);
   }
 
-  findOne(id: string) {
+  findOneById(id: string) {
     const hero = this._heroes.find((hero) => hero.id === id);
     if (!hero) {
       throw new NotFoundException(`Hero by id '${id}' no exist`);
@@ -39,16 +39,24 @@ export class HeroesService {
     return hero;
   }
 
-  update(id: string) {
-    const hero = this.findOne(id);
+  update(id: string, updateHeroDto: UpdateHeroDto) {
+    let heroDB = this.findOneById(id);
+    this._heroes = this._heroes.map((heroe) => {
+      if (heroDB.id === id) {
+        heroDB = { ...heroDB, ...updateHeroDto, id };
+        return;
+      }
+      return heroe;
+    });
+    return heroDB;
   }
 
   delete(id: string) {
-    const hero = this.findOne(id);
+    const hero = this.findOneById(id);
     return;
   }
 
-  private readonly _heroes: IHeroe[] = [
+  private _heroes: IHeroe[] = [
     {
       id: uuid(),
       superhero: 'Batman',
