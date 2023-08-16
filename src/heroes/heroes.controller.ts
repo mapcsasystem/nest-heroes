@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { HeroesService } from './heroes.service';
 import { IHeroe } from './interfaces/hero.interface';
-import { CreateCarDto } from './dtos/create-car.dto';
+import { CreateHeroDto } from './dtos/create-hero.dto';
 
 @Controller('heroes')
 export class HeroesController {
@@ -30,7 +30,7 @@ export class HeroesController {
   }
 
   @Post()
-  createHero(@Body() createCarDto: CreateCarDto) {
+  createHero(@Body() createCarDto: CreateHeroDto) {
     return this._heroesService.create(createCarDto);
   }
 

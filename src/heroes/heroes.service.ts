@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { IHeroe, IPublisherEnum } from './interfaces/hero.interface';
 import { v4 as uuid } from 'uuid';
-import { CreateCarDto } from './dtos/create-car.dto';
+import { CreateHeroDto } from './dtos/create-hero.dto';
 
 @Injectable()
 export class HeroesService {
@@ -30,8 +30,13 @@ export class HeroesService {
     return hero;
   }
 
-  create(createCarDto: CreateCarDto): CreateCarDto {
-    return createCarDto;
+  create(createHeroDto: CreateHeroDto): CreateHeroDto {
+    const hero: IHeroe = {
+      id: uuid(),
+      ...createHeroDto,
+    };
+    this._heroes.push(hero);
+    return hero;
   }
 
   update(id: string) {
